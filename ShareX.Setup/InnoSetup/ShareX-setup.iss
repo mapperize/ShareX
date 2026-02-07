@@ -1,17 +1,7 @@
 #define MyAppName "ShareX"
-#ifndef Platform
-  #define Platform "x64"
-#endif
-#if Platform == "arm64"
-  #define RuntimeId "win-arm64"
-  #define MyArchitecturesAllowed "arm64"
-#else
-  #define RuntimeId "win-x64"
-  #define MyArchitecturesAllowed "x64compatible"
-#endif
 #define MyAppRootDirectory "..\.."
 #define MyAppOutputDirectory MyAppRootDirectory + "\Output"
-#define MyAppReleaseDirectory MyAppRootDirectory + "\" + MyAppName + "\bin\Release\" + RuntimeId
+#define MyAppReleaseDirectory MyAppRootDirectory + "\" + MyAppName + "\bin\Release\win-x64"
 #define MyAppFileName MyAppName + ".exe"
 #define MyAppFilePath MyAppReleaseDirectory + "\" + MyAppFileName
 #define MyAppVersion GetStringFileInfo(MyAppFilePath, "ProductVersion")
@@ -28,14 +18,14 @@ AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
 AppVerName={#MyAppName} {#MyAppVersion}
 AppVersion={#MyAppVersion}
-ArchitecturesAllowed={#MyArchitecturesAllowed}
-ArchitecturesInstallIn64BitMode={#MyArchitecturesAllowed}
+ArchitecturesAllowed=x64os arm64 x86
+ArchitecturesInstallIn64BitMode=x64os
 DefaultDirName={commonpf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 DisableProgramGroupPage=yes
 LicenseFile={#MyAppRootDirectory}\LICENSE.txt
 MinVersion=10.0.14393
-OutputBaseFilename={#MyAppName}-{#MyAppVersion}-setup-{#Platform}
+OutputBaseFilename={#MyAppName}-{#MyAppVersion}-setup
 OutputDir={#MyAppOutputDirectory}
 PrivilegesRequired=none
 SolidCompression=yes
