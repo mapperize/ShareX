@@ -9,4 +9,7 @@
 <br></br> 
 ## If File Uploader is not set to Immich, you won't be able to upload videos
 
+# Make sure your external domain is set to something! Ideally with [Immich Public Proxy](https://github.com/alangrainger/immich-public-proxy) + Reverse Proxy + probably Cloudflare
+
+
 
