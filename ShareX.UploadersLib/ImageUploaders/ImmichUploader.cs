@@ -99,8 +99,8 @@ namespace ShareX.UploadersLib.ImageUploaders
 
             uploadContent.Add(streamContent, "assetData", fileName);
             uploadContent.Add(new StringContent(fileName), "filename");
-            uploadContent.Add(new StringContent("123"), "deviceAssetId");
-            uploadContent.Add(new StringContent("123"), "deviceId");
+            uploadContent.Add(new StringContent(DeviceId), "deviceAssetId");
+            uploadContent.Add(new StringContent(DeviceId), "deviceId");
             uploadContent.Add(new StringContent(DateTime.Now.ToString("O")), "fileCreatedAt");
             uploadContent.Add(new StringContent(DateTime.Now.ToString("O")), "fileModifiedAt");
 
