@@ -26,6 +26,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace ShareX.HelpersLib
@@ -153,11 +154,25 @@ namespace ShareX.HelpersLib
 
                     if (isPortable)
                     {
-                        endsWith = "portable.zip";
+                        if (RuntimeInformation.OSArchitecture == Architecture.Arm64)
+                        {
+                            endsWith = "portable-arm64.zip";
+                        }
+                        else
+                        {
+                            endsWith = "portable-x64.zip";
+                        }
                     }
                     else
                     {
-                        endsWith = ".exe";
+                        if (RuntimeInformation.OSArchitecture == Architecture.Arm64)
+                        {
+                            endsWith = "setup-arm64.exe";
+                        }
+                        else
+                        {
+                            endsWith = "setup-x64.exe";
+                        }
                     }
 
                     foreach (GitHubAsset asset in release.assets)
