@@ -448,7 +448,7 @@ For example, if your bucket is called "bucket.example.com" then URL will be "htt
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tpBitly.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 38</value>
+    <value>803, 539</value>
   </data>
   <data name="tpBitly.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>
@@ -1501,7 +1501,7 @@ For example, if your bucket is called "bucket.example.com" then URL will be "htt
     <value>3, 3</value>
   </data>
   <data name="tcURLShorteners.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 66</value>
+    <value>811, 567</value>
   </data>
   <data name="tcURLShorteners.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -1525,7 +1525,7 @@ For example, if your bucket is called "bucket.example.com" then URL will be "htt
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tpURLShorteners.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 72</value>
+    <value>817, 573</value>
   </data>
   <data name="tpURLShorteners.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
@@ -2968,13 +2968,13 @@ For example, if your bucket is called "bucket.example.com" then URL will be "htt
     <value>13</value>
   </data>
   <data name="tpFTP.Location" type="System.Drawing.Point, System.Drawing">
-    <value>4, 244</value>
+    <value>4, 64</value>
   </data>
   <data name="tpFTP.Padding" type="System.Windows.Forms.Padding, System.Windows.Forms">
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tpFTP.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 0</value>
+    <value>803, 499</value>
   </data>
   <data name="tpFTP.TabIndex" type="System.Int32, mscorlib">
     <value>4</value>
@@ -10670,7 +10670,7 @@ Using an encrypted library disables sharing.</value>
     <value>3, 3</value>
   </data>
   <data name="tcFileUploaders.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 66</value>
+    <value>811, 567</value>
   </data>
   <data name="tcFileUploaders.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -10694,7 +10694,7 @@ Using an encrypted library disables sharing.</value>
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tpFileUploaders.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 72</value>
+    <value>817, 573</value>
   </data>
   <data name="tpFileUploaders.TabIndex" type="System.Int32, mscorlib">
     <value>2</value>
@@ -11141,7 +11141,7 @@ Using an encrypted library disables sharing.</value>
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tpPastebin.Size" type="System.Drawing.Size, System.Drawing">
-    <value>178, 38</value>
+    <value>803, 539</value>
   </data>
   <data name="tpPastebin.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -12206,7 +12206,7 @@ Using an encrypted library disables sharing.</value>
     <value>3, 3</value>
   </data>
   <data name="tcTextUploaders.Size" type="System.Drawing.Size, System.Drawing">
-    <value>186, 66</value>
+    <value>811, 567</value>
   </data>
   <data name="tcTextUploaders.TabIndex" type="System.Int32, mscorlib">
     <value>0</value>
@@ -12230,7 +12230,7 @@ Using an encrypted library disables sharing.</value>
     <value>3, 3, 3, 3</value>
   </data>
   <data name="tpTextUploaders.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 72</value>
+    <value>817, 573</value>
   </data>
   <data name="tpTextUploaders.TabIndex" type="System.Int32, mscorlib">
     <value>1</value>

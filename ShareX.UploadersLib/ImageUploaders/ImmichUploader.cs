@@ -54,7 +54,7 @@ namespace ShareX.UploadersLib.ImageUploaders
     {
         public override ImageDestination EnumValue { get; } = ImageDestination.Immich;
 
-        //public override Icon ServiceIcon => Resources.Immich;
+        public override Icon ServiceIcon => Resources.Immich;
 
         public override bool CheckConfig(UploadersConfig config) => true;
 
@@ -77,77 +77,55 @@ namespace ShareX.UploadersLib.ImageUploaders
         public string UploadURL { get; set; }
         public string DeviceId { get; set; }
 
-        public enum SharedLinkType
-        {
-            ALBUM,
-            INDIVIDUAL
-        }
-
         public override UploadResult Upload(Stream stream, string fileName)
         {
-            UploadURL = UploadURL.TrimEnd('/');
-
-            using HttpClient httpClient = new HttpClient
-            {
-                BaseAddress = new Uri(UploadURL + "/api/")
-            };
+            UploadResult result = new UploadResult();
+            UploadURL = UploadURL.TrimEnd('/') + "/api";
 
             // https://api.immich.app/authentication
-            httpClient.DefaultRequestHeaders.Add("x-api-key", APIKey);
-
-            UploadResult result = new UploadResult();
+            NameValueCollection headers = new NameValueCollection();
+            headers.Add("x-api-key", APIKey);
 
             // Upload the data
-            // https://api.immich.app/endpoints/assets/uploadAsset
-            var streamContent = new StreamContent(stream);
-            using var uploadContent = new MultipartFormDataContent();
+            // https://api.immich.app/endpoints/assets/
+            string timestamp = DateTime.Now.ToString("O");
+            string fileFormName;
+            Dictionary<string, string> args = new Dictionary<string, string>();
 
-            uploadContent.Add(streamContent, "assetData", fileName);
-            uploadContent.Add(new StringContent(fileName), "filename");
-            uploadContent.Add(new StringContent(DeviceId), "deviceAssetId");
-            uploadContent.Add(new StringContent(DeviceId), "deviceId");
-            uploadContent.Add(new StringContent(DateTime.Now.ToString("O")), "fileCreatedAt");
-            uploadContent.Add(new StringContent(DateTime.Now.ToString("O")), "fileModifiedAt");
-
-            using HttpRequestMessage uploadRequest = new(System.Net.Http.HttpMethod.Post, UploadURL + "/api/" + "assets")
+            args.Add("filename", fileName);
+            args.Add("deviceAssetId", DeviceId);
+            args.Add("deviceId", DeviceId);
+            args.Add("fileCreatedAt", timestamp);
+            args.Add("fileModifiedAt", timestamp);
+            
+            if (FileHelpers.IsVideoFile(fileName))
             {
-                Content = uploadContent
-            };
-            using HttpResponseMessage uploadResult = httpClient.Send(uploadRequest);
+                fileFormName = "video";
+            }
+            else
+            {
+                fileFormName = "image";
+            }
 
+            UploadResult uploadResult = SendRequestFile(UploadURL + "/assets", stream, fileName, fileFormName, args, headers);
 
             if (uploadResult != null)
             {
-                string uploadJsonResponse = uploadResult.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                UploadResponse uploadResponse = JsonConvert.DeserializeObject<UploadResponse>(uploadJsonResponse); // UploadResponse contains asset id
+                UploadResponse uploadResponse = JsonConvert.DeserializeObject<UploadResponse>(uploadResult.Response); // UploadResponse contains asset id
 
                 // Immich does not automatically share the link after uploading
                 // https://api.immich.app/endpoints/shared-links/createSharedLink
-                var sharePayload = new
-                {
-                    type = SharedLinkType.INDIVIDUAL,
-                    assetIds = new[] { uploadResponse.id }
-                };
-                var options = new JsonSerializerOptions
-                {
-                    Converters = { new JsonStringEnumConverter() }
-                };
-                string shareJsonString = JsonSerializer.Serialize(sharePayload, options);
-                using var shareContent = new StringContent(shareJsonString, System.Text.Encoding.UTF8, "application/json");
+                args.Clear();
+                args.Add("type", "INDIVIDUAL");
+                args.Add("assetIds", uploadResponse.id);
 
-                using HttpRequestMessage shareRequest = new(System.Net.Http.HttpMethod.Post, UploadURL + "/api/" + "shared-links")
-                {
-                    Content = shareContent
-                };
-                using HttpResponseMessage shareResult = httpClient.Send(shareRequest);
-                string shareJsonResponse = shareResult.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                SharedLinkResponse shareResponse = JsonConvert.DeserializeObject<SharedLinkResponse>(shareJsonResponse);
+                string shareResult = SendRequest(HttpMethod.POST, UploadURL + "/shared-links", args, headers);
+                SharedLinkResponse shareResponse = JsonConvert.DeserializeObject<SharedLinkResponse>(shareResult);
 
                 // Get the external domain link
-                using HttpRequestMessage URLRequest = new(System.Net.Http.HttpMethod.Get, UploadURL + "/api/" + "server/config");
-                using HttpResponseMessage URLResult = httpClient.Send(URLRequest);
-                string URLJsonResponse = URLResult.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                ServerConfig URLResponse = JsonConvert.DeserializeObject<ServerConfig>(URLJsonResponse);
+                // https://api.immich.app/endpoints/server/getServerConfig
+                string URLRequest = SendRequest(HttpMethod.GET, UploadURL + "/server/config", args, headers);
+                ServerConfig URLResponse = JsonConvert.DeserializeObject<ServerConfig>(URLRequest);
 
                 // Convert the link into a download
                 string link = URLResponse.externalDomain + "/share/photo/" + shareResponse.key + "/" + uploadResponse.id + "/original";
