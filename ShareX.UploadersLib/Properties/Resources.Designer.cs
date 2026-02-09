@@ -378,6 +378,16 @@ namespace ShareX.UploadersLib.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon Immich {
+            get {
+                object obj = ResourceManager.GetObject("Immich", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Browse for a key file....
         /// </summary>
         internal static string KeyFileNameEditor_EditValue_Browse_for_a_key_file___ {

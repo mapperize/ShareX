@@ -43,6 +43,8 @@ namespace ShareX.UploadersLib
         Chevereto,
         [Description("vgy.me")]
         Vgyme,
+        [Description("Immich")]
+        Immich,
         CustomImageUploader, // Localized
         FileUploader // Localized
     }
@@ -131,7 +133,7 @@ namespace ShareX.UploadersLib
         Vault_ooo,
         SharedFolder, // Localized
         Email, // Localized
-        CustomFileUploader // Localized
+        CustomFileUploader, // Localized
     }
 
     [Description("URL shorteners"), DefaultValue(BITLY)]
